@@ -9,7 +9,6 @@ def explore(adj,v,visited):
             explore(adj,w,visited)
 
 def reach(adj, x, y):
-    #write your code here
     visited = [False for i in range(len(adj))]
     explore(adj,x,visited)
     return 1 if visited[y] else 0
