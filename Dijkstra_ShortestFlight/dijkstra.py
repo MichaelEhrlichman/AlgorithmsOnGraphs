@@ -31,8 +31,8 @@ class MinHeap():
 
     def sift_up(self,i):  #min-heap sift up
         while i > 0 and self.data[self.parent(i)][0] > self.data[i][0]:
-            self.data[i], self.data[parent(i)] = self.data[parent(i)], self.data[i]
-            i = parent(i)
+            self.data[i], self.data[self.parent(i)] = self.data[self.parent(i)], self.data[i]
+            i = self.parent(i)
 
     def sift_down(self,i):  # min-heap sift down
         minix = i
@@ -57,20 +57,33 @@ class MinHeap():
 
     def extract_min(self):
         dist,u = self.data[0]
-        self.data[0] = self.data.pop()
-        self.sift_down(0)
+        if self.n > 1:
+            self.data[0] = self.data.pop()
+            self.n -= 1
+            self.sift_down(0)
+        else:
+            self.data.pop()
         return dist,u
+
+    def insert(self,i,d):
+        self.data.append([d,i])
+        self.n += 1
+        self.sift_up(self.n-1)
 
 def distance(adj, cost, s, t):
     dist = [float('inf') for i in range(len(adj))]
     prev = [None for i in range(len(adj))]
     dist[s] = 0
     H = MinHeap(dist)
-    while len(H) > 0:
+    while len(H.data) > 0:
         distu, u = H.extract_min() 
-        for v in adj[u]:
-            if dist[v] > distu
-    return -1
+        for v,w in zip(adj[u],cost[u]):
+            if dist[v] > distu + w:
+                dist[v] = distu + w
+                prev[v] = u
+                #H.change_distance(v,dist[v])  #Need to search heap for vertex v
+                H.insert(v,dist[v])  #Need to search heap for vertex v
+    return dist[t] if dist[t] < float('inf') else -1
 
 
 if __name__ == '__main__':
