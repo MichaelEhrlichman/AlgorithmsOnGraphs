@@ -97,7 +97,6 @@ def distance(adj, cost, s, t):
                 #H.insert(v,dist[v])  #Need to search heap for vertex v
     return dist[t] if dist[t] < float('inf') else -1
 
-
 if __name__ == '__main__':
     input = sys.stdin.read()
     data = list(map(int, input.split()))
